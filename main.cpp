@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
 			("lower-bound,l", value<double>(&lb_size), "limit the lower bound for the --size_* arguments in all three dimensions for Vina (ignored if --all specified)")
 			("upper-bound,u", value<double>(&ub_size), "limit the upper bound for the --size_* arguments in all three dimensions for Vina (ignored if --all specified)")
 			("no-ligand-argument,L", bool_switch(&no_ligand_argument), "do not emit --ligand argument for Vina (ignored if --all specified)")
-			("centroid,c", bool_switch(&use_centroid), "use centroid (i.e. geometric center, center of mass, center of gravity, centre de gravité) instead of bounding box center when generating --center_* arguments for Vina (ignored if --all specified)")
+			("centroid,c", bool_switch(&use_centroid), "use centroid (i.e. geometric center, center of mass, or center of gravity) instead of bounding box center when generating --center_* arguments for Vina (ignored if --all specified)")
 			("help", "this help information")
 			("version", "version information");
 
