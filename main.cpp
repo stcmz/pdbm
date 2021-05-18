@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
 
 		if (vm.count("version"))
 		{
-			cout << "1.0.4 (2020-08-25)" << endl;
+			cout << "1.0.5 (2021-05-17)" << endl;
 			return 0;
 		}
 
