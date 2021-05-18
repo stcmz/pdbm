@@ -1,5 +1,7 @@
 pdbm
 =====
+![build workflow](https://github.com/stcmz/pdbm/actions/workflows/build.yml/badge.svg)
+![release workflow](https://github.com/stcmz/pdbm/actions/workflows/release.yml/badge.svg)
 
 pdbm is a cross-platform measurement tool for molecule models.
 
