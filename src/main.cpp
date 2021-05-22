@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
 		if (vm.count("help")) // program input
 		{
 			cout << "Usage: " << argv[0] << " [<input-file>] [options]" << endl;
-			cout << join("/", supported_formats.begin(), supported_formats.end()) + " measuring tool by ryan@imozo.cn" << endl;
+			cout << join("/", supported_formats.begin(), supported_formats.end()) + " measuring tool by Maozi Chen" << endl;
 			cout << endl;
 			cout << options;
 			return 0;
