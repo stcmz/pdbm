@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
 
 	try
 	{
-		bool all_dimensions, no_ligand_argument, use_centroid;
+		bool all_dimensions, no_ligand_argument, use_centroid, conf_lines;
 		path input_path;
 		double magnification, lb_size, ub_size;
 		string input_fmt;
@@ -153,10 +153,11 @@ int main(int argc, char* argv[])
 		options.add_options()
 			("input-file,i", value<path>(&input_path), (join("/", supported_formats.begin(), supported_formats.end()) + " file to be measured, without this argument user will be prompted to input lines").c_str())
 			("input-format,f", value<string>(&input_fmt), ("supported input formats: " + join(", ", supported_formats.begin(), supported_formats.end())).c_str())
-			("all,a", bool_switch(&all_dimensions), "output detailed dimensional information instead of the form of AutoDock Vina and idock arguments which is the default")
+			("all,a", bool_switch(&all_dimensions), "output detailed dimensional information instead of the form of AutoDock Vina and idock/jdock arguments which is the default")
 			("magnification,m", value<double>(&magnification)->default_value(default_magnification), "magnification ratio on the measured size (ignored if --all specified)")
 			("lower-bound,l", value<double>(&lb_size), "limit the lower bound for the --size_* arguments in all three dimensions for Vina (ignored if --all specified)")
 			("upper-bound,u", value<double>(&ub_size), "limit the upper bound for the --size_* arguments in all three dimensions for Vina (ignored if --all specified)")
+			("conf-lines,C", bool_switch(&conf_lines), "output arguments in the form of conf lines instead of one-liner arguments for Vina (ignored if --all specified)")
 			("no-ligand-argument,L", bool_switch(&no_ligand_argument), "do not emit --ligand argument for Vina (ignored if --all specified)")
 			("centroid,c", bool_switch(&use_centroid), "use centroid (i.e. geometric center, center of mass, or center of gravity) instead of bounding box center when generating --center_* arguments for Vina (ignored if --all specified)")
 			("help", "this help information")
@@ -180,7 +181,7 @@ int main(int argc, char* argv[])
 
 		if (vm.count("version"))
 		{
-			cout << "1.0.6 (2021-06-02)" << endl;
+			cout << "1.1.0 (2021-09-30)" << endl;
 			return 0;
 		}
 
@@ -268,15 +269,29 @@ int main(int argc, char* argv[])
 					size_z = min(size_z, ub_size);
 				}
 
-				if (!no_ligand_argument && vm.count("input-file"))
-					cout << "--ligand=" << input_path << ' ';
-				cout << "--center_x=" << center_x
-					<< " --center_y=" << center_y
-					<< " --center_z=" << center_z
-					<< " --size_x=" << size_x
-					<< " --size_y=" << size_y
-					<< " --size_z=" << size_z
-					<< endl;
+				if (conf_lines)
+				{
+					if (!no_ligand_argument && vm.count("input-file"))
+						cout << "ligand=" << input_path << endl;
+					cout << "center_x=" << center_x << endl
+						 << "center_y=" << center_y << endl
+						 << "center_z=" << center_z << endl
+						 << "size_x=" << size_x << endl
+						 << "size_y=" << size_y << endl
+						 << "size_z=" << size_z << endl;
+				}
+				else
+				{
+					if (!no_ligand_argument && vm.count("input-file"))
+						cout << "--ligand=" << input_path << ' ';
+					cout << "--center_x=" << center_x
+						<< " --center_y=" << center_y
+						<< " --center_z=" << center_z
+						<< " --size_x=" << size_x
+						<< " --size_y=" << size_y
+						<< " --size_z=" << size_z
+						<< endl;
+				}
 			}
 			else
 			{
